@@ -62,9 +62,9 @@ function App() {
           <div className="lg:col-span-3 min-h-screen bg-gray-50 flex flex-col items-center justify-center">
             <ParameterChart />
           </div>
-          <div className="lg:col-span-3 min-h-screen bg-gray-50 flex flex-col items-center justify-center">
+          {/* <div className="lg:col-span-3 min-h-screen bg-gray-50 flex flex-col items-center justify-center">
             <CityHeatMap />
-          </div>
+          </div> */}
         </div>
       </main>
     </div>
