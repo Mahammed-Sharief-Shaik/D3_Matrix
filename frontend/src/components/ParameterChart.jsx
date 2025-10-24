@@ -38,7 +38,7 @@ const ParameterChart = () => {
   const data = paramData[selectedParam][activeTab];
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm h-full">
+    <div className="bg-white ml-6 p-6 rounded-xl shadow-sm h-full">
       {/* Top Section: Dropdown + Tabs */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
         {/* Left - Parameter Dropdown */}

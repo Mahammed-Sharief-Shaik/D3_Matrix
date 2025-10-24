@@ -59,12 +59,13 @@ function App() {
           <div className="lg:col-span-2">
             <DemandForecast />
           </div>
-          <div className="lg:col-span-3 min-h-screen bg-gray-50 flex flex-col items-center justify-center">
+
+          <div className="lg:col-span-1 min-h-screen bg-gray-50 flex flex-col items-center ">
             <ParameterChart />
           </div>
-          {/* <div className="lg:col-span-3 min-h-screen bg-gray-50 flex flex-col items-center justify-center">
+          <div className="lg:col-span-2 ">
             <CityHeatMap />
-          </div> */}
+          </div>
         </div>
       </main>
     </div>
