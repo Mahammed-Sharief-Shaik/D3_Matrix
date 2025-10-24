@@ -1,11 +1,10 @@
 // src/App.js
-import React from 'react';
-import Sidebar from './components/Sidebar';
-import Header from './components/Header';
-import KpiCard from './components/KpiCard';
-import ScenarioControls from './components/ScenarioControls';
-import DemandForecast from './components/DemandForecast';
-import ParameterChart from './components/parameterChart';
+import React from "react";
+import Header from "./components/Header";
+import KpiCard from "./components/KpiCard";
+import ScenarioControls from "./components/ScenarioControls";
+import DemandForecast from "./components/DemandForecast";
+import ParameterChart from "./components/parameterChart";
 
 function App() {
   // This data would come from your backend API
@@ -20,7 +19,7 @@ function App() {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      <Sidebar />
+      {/* <Sidebar /> */}
 
       {/* Main Content Area */}
       <main className="flex-1 p-8 overflow-y-auto">
@@ -50,7 +49,6 @@ function App() {
 
         {/* Main Dashboard Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          
           {/* Left Column: Controls */}
           <div className="lg:col-span-1">
             <ScenarioControls />
@@ -60,8 +58,8 @@ function App() {
           <div className="lg:col-span-2">
             <DemandForecast />
           </div>
-          <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
-      <ParameterChart/>
+          <div className="lg:col-span-3 min-h-screen bg-gray-50 flex flex-col items-center justify-center">
+            <ParameterChart />
           </div>
         </div>
       </main>
