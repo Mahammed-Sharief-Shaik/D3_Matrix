@@ -5,6 +5,7 @@ import Header from './components/Header';
 import KpiCard from './components/KpiCard';
 import ScenarioControls from './components/ScenarioControls';
 import DemandForecast from './components/DemandForecast';
+import ParameterChart from './components/parameterChart';
 
 function App() {
   // This data would come from your backend API
@@ -58,6 +59,9 @@ function App() {
           {/* Right Column: Graph */}
           <div className="lg:col-span-2">
             <DemandForecast />
+          </div>
+          <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
+      <ParameterChart/>
           </div>
         </div>
       </main>
