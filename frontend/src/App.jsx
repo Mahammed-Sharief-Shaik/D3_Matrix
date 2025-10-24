@@ -4,7 +4,8 @@ import Header from "./components/Header";
 import KpiCard from "./components/KpiCard";
 import ScenarioControls from "./components/ScenarioControls";
 import DemandForecast from "./components/DemandForecast";
-import ParameterChart from "./components/parameterChart";
+import ParameterChart from "./components/ParameterChart";
+import CityHeatMap from "./components/CityHeatMap";
 
 function App() {
   // This data would come from your backend API
@@ -60,6 +61,9 @@ function App() {
           </div>
           <div className="lg:col-span-3 min-h-screen bg-gray-50 flex flex-col items-center justify-center">
             <ParameterChart />
+          </div>
+          <div className="lg:col-span-3 min-h-screen bg-gray-50 flex flex-col items-center justify-center">
+            <CityHeatMap />
           </div>
         </div>
       </main>
