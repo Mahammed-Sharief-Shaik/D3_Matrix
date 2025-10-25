@@ -15,7 +15,7 @@ const getDayName = (dayOffset) => {
 };
 
 // 1. Daily Data (24-hour cycle with peak)
-export const dailyData = [
+export const todayData = [
   { name: "00:00", forecast: 150, historical: 145 },
   { name: "02:00", forecast: 140, historical: 135 },
   { name: "04:00", forecast: 135, historical: 130 },
@@ -34,15 +34,7 @@ export const dailyData = [
 ];
 
 // 2. Today Data (Day -3 to Day +3)
-export const weeklyData = [
-  { name: getDayName(-3), forecast: 230, historical: 220 },
-  { name: getDayName(-2), forecast: 240, historical: 235 },
-  { name: getDayName(-1), forecast: 235, historical: 240 },
-  { name: getDayName(0), forecast: 245, historical: 242 }, // Today
-  { name: getDayName(1), forecast: 250, historical: 248 },
-  { name: getDayName(2), forecast: 260, historical: 255 },
-  { name: getDayName(3), forecast: 255, historical: 250 },
-];
+
 
 // 3. Monthly Data (12 Months)
 // (Using the more logical data from the first example)
@@ -62,11 +54,4 @@ export const monthlyData = [
 ];
 
 // 4. Annual Data (Year-over-Year)
-export const AnnualData = [
-  { name: "2025", forecast: 2800, historical: 2750 },
-  { name: "2026", forecast: 2850, historical: 2800 },
-  { name: "2027", forecast: 2900, historical: 2880 },
-  { name: "2028", forecast: 2950, historical: 2910 },
-  { name: "2029", forecast: 3000, historical: 2950 },
-  { name: "2030", forecast: 3100, historical: 3020 },
-];
+

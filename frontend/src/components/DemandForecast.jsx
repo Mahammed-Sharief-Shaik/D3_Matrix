@@ -12,10 +12,8 @@ import {
 
 // 1. Updated imports to include all 4 data types
 import {
-  dailyData,
-  weeklyData,
-  monthlyData,
-  AnnualData,
+  todayData,
+  monthlyData
 } from "../utils/tempData"; // Assuming this is the correct path to your data file
 
 // Reusable Tab Button
@@ -46,17 +44,11 @@ const DemandForecast = () => {
 
     // Use a switch statement for cleaner logic
     switch (tabName) {
-      case "Daily":
-        setChartData(dailyData);
-        break;
-      case "Weekly":
-        setChartData(weeklyData);
+      case "Today":
+        setChartData(todayData);
         break;
       case "Monthly":
         setChartData(monthlyData);
-        break;
-      case "Annual": // Renamed "Annual Total" to "Annual" for brevity
-        setChartData(AnnualData);
         break;
       default:
         setChartData(monthlyData); // Default to monthly
@@ -72,22 +64,12 @@ const DemandForecast = () => {
         {/* 3. Updated tab buttons in the UI */}
         <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
           <TabButton
-            label="Daily"
-            activeTab={activeTab}
-            onClick={handleTabClick}
-          />
-          <TabButton
-            label="Weekly"
+            label="Today"
             activeTab={activeTab}
             onClick={handleTabClick}
           />
           <TabButton
             label="Monthly"
-            activeTab={activeTab}
-            onClick={handleTabClick}
-          />
-          <TabButton
-            label="Annual" // Changed label
             activeTab={activeTab}
             onClick={handleTabClick}
           />

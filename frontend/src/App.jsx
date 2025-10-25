@@ -10,9 +10,9 @@ import CityHeatMap from "./components/CityHeatMap";
 function App() {
   // This data would come from your backend API
   const forecastData = {
-    peakDemand: 245,
+    peakDemand: 3119.45,
     peakDemandChange: 2.3,
-    annualDemand: 2.8,
+    annualDemand: 3155.78,
     annualDemandChange: 1.8,
     conservation: 18.5,
     conservationChange: -0.7,
@@ -29,19 +29,19 @@ function App() {
         {/* KPI Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           <KpiCard
-            title="Current Peak Demand"
+            title="Current Demand"
             value={forecastData.peakDemand}
-            unit="MW"
+            unit="kW"
             change={forecastData.peakDemandChange}
           />
           <KpiCard
-            title="Projected Annual Demand"
+            title="Projected Demand (5 mins)"
             value={forecastData.annualDemand}
             unit="TWh"
             change={forecastData.annualDemandChange}
           />
           <KpiCard
-            title="Conservation Potential"
+            title="Projected Demand (Next Month)"
             value={forecastData.conservation}
             unit="%"
             change={forecastData.conservationChange}
