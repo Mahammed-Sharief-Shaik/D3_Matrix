@@ -21,8 +21,8 @@ const CityHeatMap = () => {
         const enrichedGeoJson = {
           ...geoJsonData,
           features: geoJsonData.features.map((feature) => {
-            const acNo = feature.properties.AC_NO;
-            const consumptionValue = consumptionData[acNo];
+            const ward = feature.properties.wardcode;
+            const consumptionValue = consumptionData[ward];
             return {
               ...feature,
               properties: {
