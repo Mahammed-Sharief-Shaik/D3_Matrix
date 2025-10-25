@@ -49,10 +49,9 @@ const ScenarioControls = () => {
   const [rhum, setRhum] = useState(93.0);
   const [wspd, setWspd] = useState(0.0);
   const [pres, setPres] = useState(1017.0);
-  
-  // --- New time states (from first image) ---
-  const [hour, setHour] = useState(0); // From image: 0
-  const [minute, setMinute] = useState(30); // From image: 30
+
+  // --- New time state (replaces hour and minute) ---
+  const [time, setTime] = useState("00:30"); // Default "HH:mm" format
 
   // --- States from second image ---
   // Using 0 for "No" and 1 for "Yes"
@@ -62,10 +61,15 @@ const ScenarioControls = () => {
   const [totalRainfall, setTotalRainfall] = useState(56.6);
   const [season, setSeason] = useState("Winter");
 
-  const [submittedData, setSubmittedData] = useState(null);
+  // Removed submittedData state
 
   // Updated handleSubmit function to send all parameters
   const handleSubmit = async () => {
+    // Parse time string "HH:mm" into numbers
+    const [hourStr, minuteStr] = time.split(":");
+    const hour = parseInt(hourStr, 10);
+    const minute = parseInt(minuteStr, 10);
+
     const dataToSubmit = {
       // From first image (weather)
       temp,
@@ -85,7 +89,7 @@ const ScenarioControls = () => {
     };
 
     // 1. Update the local UI state
-    setSubmittedData(dataToSubmit);
+    // setSubmittedData(dataToSubmit); // Removed as requested
 
     // 2. Send the data to the backend API
     try {
@@ -119,25 +123,18 @@ const ScenarioControls = () => {
         Scenario Controls
       </h2>
 
-      {/* --- Time Inputs --- */}
-      <SliderInput
-        label="Hour of Day"
-        value={hour}
-        unit="" // No unit for hour
-        onChange={setHour}
-        min="0"
-        max="23"
-        step="1"
-      />
-      <SliderInput
-        label="Minute"
-        value={minute}
-        unit="" // No unit for minute
-        onChange={setMinute}
-        min="0"
-        max="59"
-        step="1" // Step by 1 minute
-      />
+      {/* --- Time Input (replaces sliders) --- */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Time
+        </label>
+        <input
+          type="time"
+          value={time}
+          onChange={(e) => setTime(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
 
       {/* --- Weather Inputs (from first image) --- */}
       <SliderInput
@@ -243,86 +240,7 @@ const ScenarioControls = () => {
         Submit
       </button>
 
-      {/* Updated submitted data display */}
-      {submittedData && (
-        <div className="mt-6 border-t border-gray-200 pt-4">
-          <h3 className="text-lg font-semibold text-gray-700 mb-3">
-            Selected Parameters
-          </h3>
-          <ul className="space-y-1 text-sm text-gray-600">
-            {/* Time */}
-            <li>
-              Time:{" "}
-              <span className="font-medium text-blue-700">
-                {String(submittedData.hour).padStart(2, "0")}:
-                {String(submittedData.minute).padStart(2, "0")}
-              </span>
-            </li>
-            {/* From first image */}
-            <li>
-              Temperature:{" "}
-              <span className="font-medium text-blue-700">
-                {submittedData.temp}°C
-              </span>
-            </li>
-            <li>
-              Dew Point:{" "}
-              <span className="font-medium text-blue-700">
-                {submittedData.dwpt}°C
-              </span>
-            </li>
-            <li>
-              Humidity:{" "}
-              <span className="font-medium text-blue-700">
-                {submittedData.rhum}%
-              </span>
-            </li>
-            <li>
-              Wind Speed:{" "}
-              <span className="font-medium text-blue-700">
-                {submittedData.wspd} km/h
-              </span>
-            </li>
-            <li>
-              Pressure:{" "}
-              <span className="font-medium text-blue-700">
-                {submittedData.pres} hPa
-              </span>
-            </li>
-            {/* From second image */}
-            <li>
-              Is Weekend:{" "}
-              <span className="font-medium text-blue-700">
-                {submittedData.Is_weekend ? "Yes" : "No"}
-              </span>
-            </li>
-            <li>
-              Is Holiday:{" "}
-              <span className="font-medium text-blue-700">
-                {submittedData.Is_holiday ? "Yes" : "No"}
-              </span>
-            </li>
-            <li>
-              Monthly Rainy Days:{" "}
-              <span className="font-medium text-blue-700">
-                {submittedData.Monthly_Rainy_Days} days
-              </span>
-            </li>
-            <li>
-              Monthly Total Rainfall:{" "}
-              <span className="font-medium text-blue-700">
-                {submittedData.Monthly_Total_Rainfall} mm
-              </span>
-            </li>
-            <li>
-              Season:{" "}
-              <span className="font-medium text-blue-700">
-                {submittedData.season}
-              </span>
-            </li>
-          </ul>
-        </div>
-      )}
+      {/* Removed submitted data display as requested */}
     </div>
   );
 };
