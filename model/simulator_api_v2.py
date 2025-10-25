@@ -7,6 +7,10 @@ from typing import List, Dict, Any
 import requests
 from datetime import datetime
 import json # For handling numpy types in JSON
+# --- 1. Configuration ---
+# ... (existing imports)
+from fastapi.middleware.cors import CORSMiddleware # <--- ADD THIS LINE
+# ... (rest of your imports)
 
 # --- 1. Configuration ---
 # Data Paths
@@ -26,6 +30,16 @@ app = FastAPI(
     title="Delhi Power Demand Simulator API v2",
     description="Simulates 5-min data, calls prediction APIs, provides graph data."
 )
+
+# --- ADD THIS BLOCK TO ENABLE CORS ---
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
+# ------------------------------------
 
 # --- 3. Load Data & Initialize State ---
 GLOBAL_DATA_5MIN_DF = None
@@ -124,10 +138,10 @@ async def get_live_update_v2():
     # Format for 5-min API
     history_df_renamed = history_df_5min.rename(columns={"Power demand": "Power_demand"})
     api_input_5min = []
-    for _, row in history_df_renamed.iterrows():
+    for _, row in history_df_5min.iterrows():
         point = { # Match RawDataPoint from main.py
             "datetime": row['datetime'].strftime('%Y-%m-%d %H:%M:%S'),
-            "Power_demand": row['Power_demand'], "temp": row['temp'], "dwpt": row['dwpt'],
+            "Power_demand": row['Power demand'], "temp": row['temp'], "dwpt": row['dwpt'],
             "rhum": row['rhum'], "wdir": row['wdir'], "wspd": row['wspd'],
             "pres": row['pres'], "moving_avg_3": row.get('moving_avg_3', 0.0)
         }

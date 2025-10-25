@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 // Updated SliderInput to accept min, max, and step as props
 const SliderInput = ({ label, value, unit, onChange, min, max, step }) => (
-  <div className="mb-6">
+  <div className="mb-4">
     <div className="flex justify-between items-center mb-1">
       <label className="text-sm font-medium text-gray-700">{label}</label>
       <span className="text-sm font-bold text-blue-600">
@@ -24,7 +24,7 @@ const SliderInput = ({ label, value, unit, onChange, min, max, step }) => (
 
 // Re-adding SelectInput for the new categorical parameters
 const SelectInput = ({ label, value, options, onChange }) => (
-  <div className="mb-6">
+  <div className="mb-4">
     <label className="block text-sm font-medium text-gray-700 mb-1">
       {label}
     </label>
@@ -105,7 +105,7 @@ const ScenarioControls = () => {
       );
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error();
       }
 
       const result = await response.json();
@@ -118,127 +118,154 @@ const ScenarioControls = () => {
   };
 
   return (
+    // Main container: 1 single box
     <div className="bg-white p-6 rounded-xl shadow-sm h-full">
-      <h2 className="text-xl font-semibold text-gray-800 mb-6">
+      <h2 className="text-xl font-semibold text-gray-800 mb-6 text-center">
         Scenario Controls
       </h2>
 
-      {/* --- Time Input (replaces sliders) --- */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Time
-        </label>
-        <input
-          type="time"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+      {/* Inner grid for the 3 columns of inputs */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8">
+        {/* Column 1: Temporal Factors */}
+        <div className="flex flex-col">
+          <h3 className="text-lg font-medium text-gray-700 mb-4">
+            Temporal Factors
+          </h3>
+          {/* --- Time Input (replaces sliders) --- */}
+          <div className="mb-4">
+            {" "}
+            {/* Was mb-6 */}
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Time
+            </label>
+            <input
+              type="time"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <SelectInput
+            label="Is Weekend?"
+            value={isWeekend}
+            // Using parseFloat for state consistency, though 0/1 are numbers
+            onChange={(val) => setIsWeekend(parseFloat(val))}
+            options={[
+              { label: "No", value: 0 },
+              { label: "Yes", value: 1 },
+            ]}
+          />
+          <SelectInput
+            label="Is Holiday?"
+            value={isHoliday}
+            onChange={(val) => setIsHoliday(parseFloat(val))}
+            options={[
+              { label: "No", value: 0 },
+              { label: "Yes", value: 1 },
+            ]}
+          />
+        </div>
+
+        {/* Column 2: Meteorological Data */}
+        <div className="flex flex-col">
+          <h3 className="text-lg font-medium text-gray-700 mb-4">
+            Meteorological Data
+          </h3>
+          {/* --- Weather Inputs (from first image) --- */}
+          <SliderInput
+            label="Temperature"
+            value={temp}
+            unit="°C"
+            onChange={setTemp}
+            min="-10"
+            max="50"
+            step="0.1"
+          />
+          <SliderInput
+            label="Dew Point"
+            value={dwpt}
+            unit="°C"
+            onChange={setDwpt}
+            min="-10"
+            max="50"
+            step="0.1"
+          />
+          <SliderInput
+            label="Humidity"
+            value={rhum}
+            unit="%"
+            onChange={setRhum}
+            min="0"
+            max="100"
+            step="0.1"
+          />
+          <SliderInput
+            label="Wind Speed"
+            value={wspd}
+            unit=" km/h"
+            onChange={setWspd}
+            min="0"
+            max="100"
+            step="0.1"
+          />
+          <SliderInput
+            label="Pressure"
+            value={pres}
+            unit=" hPa"
+            onChange={setPres}
+            min="950"
+            max="1050"
+            step="0.1"
+          />
+        </div>
+
+        {/* Column 3: Contextual Factors */}
+        <div className="flex flex-col">
+          <h3 className="text-lg font-medium text-gray-700 mb-4">
+            Contextual Factors
+          </h3>
+          {/* --- Inputs from second image --- */}
+          <SliderInput
+            label="Monthly Rainy Days"
+            value={rainyDays}
+            unit=" days"
+            onChange={setRainyDays}
+            min="0"
+            max="31"
+            step="0.1"
+          />
+          <SliderInput
+            label="Monthly Total Rainfall"
+            value={totalRainfall}
+            unit=" mm"
+            onChange={setTotalRainfall}
+            min="0"
+            max="1000" // Assuming a high max for rainfall
+            step="0.1"
+          />
+          <SelectInput
+            label="Season"
+            value={season}
+            onChange={setSeason}
+            options={[
+              { label: "Winter", value: "Winter" },
+              { label: "Spring", value: "Spring" },
+              { label: "Summer", value: "Summer" },
+              { label: "Autumn", value: "Autumn" },
+            ]}
+          />
+        </div>
       </div>
 
-      {/* --- Weather Inputs (from first image) --- */}
-      <SliderInput
-        label="Temperature"
-        value={temp}
-        unit="°C"
-        onChange={setTemp}
-        min="-10"
-        max="50"
-        step="0.1"
-      />
-      <SliderInput
-        label="Dew Point"
-        value={dwpt}
-        unit="°C"
-        onChange={setDwpt}
-        min="-10"
-        max="50"
-        step="0.1"
-      />
-      <SliderInput
-        label="Humidity"
-        value={rhum}
-        unit="%"
-        onChange={setRhum}
-        min="0"
-        max="100"
-        step="0.1"
-      />
-      <SliderInput
-        label="Wind Speed"
-        value={wspd}
-        unit=" km/h"
-        onChange={setWspd}
-        min="0"
-        max="100"
-        step="0.1"
-      />
-      <SliderInput
-        label="Pressure"
-        value={pres}
-        unit=" hPa"
-        onChange={setPres}
-        min="950"
-        max="1050"
-        step="0.1"
-      />
-
-      {/* --- Inputs from second image --- */}
-      <SelectInput
-        label="Is Weekend?"
-        value={isWeekend}
-        // Using parseFloat for state consistency, though 0/1 are numbers
-        onChange={(val) => setIsWeekend(parseFloat(val))}
-        options={[
-          { label: "No", value: 0 },
-          { label: "Yes", value: 1 },
-        ]}
-      />
-      <SelectInput
-        label="Is Holiday?"
-        value={isHoliday}
-        onChange={(val) => setIsHoliday(parseFloat(val))}
-        options={[
-          { label: "No", value: 0 },
-          { label: "Yes", value: 1 },
-        ]}
-      />
-      <SliderInput
-        label="Monthly Rainy Days"
-        value={rainyDays}
-        unit=" days"
-        onChange={setRainyDays}
-        min="0"
-        max="31"
-        step="0.1"
-      />
-      <SliderInput
-        label="Monthly Total Rainfall"
-        value={totalRainfall}
-        unit=" mm"
-        onChange={setTotalRainfall}
-        min="0"
-        max="1000" // Assuming a high max for rainfall
-        step="0.1"
-      />
-      <SelectInput
-        label="Season"
-        value={season}
-        onChange={setSeason}
-        options={[
-          { label: "Winter", value: "Winter" },
-          { label: "Spring", value: "Spring" },
-          { label: "Summer", value: "Summer" },
-          { label: "Autumn", value: "Autumn" },
-        ]}
-      />
-
-      <button
-        onClick={handleSubmit}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-colors"
-      >
-        Submit
-      </button>
+      {/* --- Submit Button (Centered) --- */}
+      <div className="mt-8 flex justify-center">
+        <button
+          onClick={handleSubmit}
+          className="w-full md:w-1/3 lg:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-colors"
+        >
+          Submit
+        </button>
+      </div>
 
       {/* Removed submitted data display as requested */}
     </div>
@@ -246,4 +273,3 @@ const ScenarioControls = () => {
 };
 
 export default ScenarioControls;
-
